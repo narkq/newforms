@@ -47,6 +47,10 @@ var RenderForm = React.createClass({
   , rowComponent: React.PropTypes.any      // Component to wrap each row
   }),
 
+  contextTypes: {
+    validateWith: React.PropTypes.func
+  },
+
   childContextTypes: {
     form: React.PropTypes.instanceOf(Form)
   },
@@ -71,6 +75,9 @@ var RenderForm = React.createClass({
       this.form = new this.props.form(object.extend({
         onChange: this.forceUpdate.bind(this)
       }, getProps(this.props, Object.keys(formProps))))
+    }
+    if (this.context.validateWith) {
+      this.form.validateWith = this.context.validateWith;
     }
   },
 
